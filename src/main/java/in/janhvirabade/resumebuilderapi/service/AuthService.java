@@ -3,6 +3,7 @@ package in.janhvirabade.resumebuilderapi.service;
 import in.janhvirabade.resumebuilderapi.document.User;
 import in.janhvirabade.resumebuilderapi.dto.AuthResponse;
 import in.janhvirabade.resumebuilderapi.dto.RegisterRequest;
+import in.janhvirabade.resumebuilderapi.exception.ResourceExistException;
 import in.janhvirabade.resumebuilderapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ public class AuthService {
         log.info("Inside AuthService.register(): {}", request);
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("User already exists with this email");
+            throw new ResourceExistException("User already exists with this email");
         }
 
         User newUser = toDocument(request);
